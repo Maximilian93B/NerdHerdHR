@@ -5,6 +5,7 @@ const inquirer = require('inquirer');
 
 function mainMenu() {
     return inquirer.prompt([
+        // used inquirer prompts to prompt user for actoions 'chooices' 
         {
             type: 'list',
             name: 'action',
