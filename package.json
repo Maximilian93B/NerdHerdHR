@@ -11,5 +11,9 @@
     "url": "NerdHerdHR"
   },
   "author": "mdb_dev",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.8.0"
+  }
 }
