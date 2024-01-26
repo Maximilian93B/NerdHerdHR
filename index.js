@@ -4,8 +4,6 @@
 
 const { mainMenu } = require('./inquirerPrompts');
 const queries = require('./queries/queries');
-const connection = require('./db/connection');
-
 
 async function init() {
     try {
@@ -13,15 +11,13 @@ async function init() {
         console.log('User selected:', action);
 
         if (action === 'View All Employees') {
-            // Your logic to handle this action
-            const query = "SELECT * FROM employee";
-            return new Promise((resolve, reject) =>
-        {
-            connection.query(query, (err,results) =>{
-                if (err) reject(err);
-                resolve(results);
-            });
-        });
+            console.log('Fetching all employees...');
+            try {
+                const employees = await queries.getAllEmployees();
+                console.table(employees);
+            } catch (queryError) {
+                console.error('Error fetching employees:', queryError);
+            }
         }
         // ... other actions ...
     } catch (err) {
@@ -30,6 +26,5 @@ async function init() {
 }
 
 init();
-
 
 
