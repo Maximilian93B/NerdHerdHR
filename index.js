@@ -12,12 +12,8 @@ async function init() {
 
         if (action === 'View All Employees') {
             console.log('Fetching all employees...');
-            try {
-                const employees = await queries.getAllEmployees();
-                console.table(employees);
-            } catch (queryError) {
-                console.error('Error fetching employees:', queryError);
-            }
+            const employees = await queries.getAllEmployees();
+            console.table(employees);
         }
         // ... other actions ...
     } catch (err) {
@@ -26,5 +22,4 @@ async function init() {
 }
 
 init();
-
 
