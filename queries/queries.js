@@ -1,9 +1,10 @@
 // This file containts all queries made to the db. 
 // It is broken down into View, Add , Update , 
-// The workflow will take you this way 
+// The workflow will take you this way
 
 
 
+//                      VIEW FUNCTIONS 
 
 const connection = require('../db/connection.js');
 
@@ -60,4 +61,54 @@ function viewAllEmployees() {
 }
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees };
+
+//                      ADD FUNCTIONS 
+
+
+// add a Department to db 
+
+function addDepartment(departmentName) {
+    const query ='INSERT INTO department (name) VALUE (?)';
+    return new Promise ((resolve, reject)=>{
+        connection.query(query, [departmentName], (err,result) =>{
+            if (err) {
+                console.log('Error Adding to db ', err);
+                reject(err);
+            } else {
+                console.log('Perfect! More Departments..')
+                resolve(result);
+            }
+        });
+    });
+}
+
+// add Role
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment };

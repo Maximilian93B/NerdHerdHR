@@ -1,6 +1,9 @@
 const inquirer = require('inquirer');
 const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./queries/queries.js');
 
+//           INQUIRER PROMPTS 
+
+
 const mainMenu = [
   {
     type: 'list',
@@ -16,8 +19,56 @@ const mainMenu = [
       'Update Employee Role',
       'Exit'
     ]
-  }
+  },
+  // Department Prompt 
+
+  {
+    type: 'input', 
+    name: 'departmentName', 
+    message: 'Enter the name of the new Department:',
+    when: (answers) => answers.menuChoice === 'Add a Deprartment',
+    validate: (input) => {
+      if (input.trim() === '') {
+        return 'Department name cannot be empty.';
+      }
+      return true;
+    },
+  },
+  {
+    type: 'input',
+    name: 'title',
+    message: 'Enter the title of the new role:',
+    when: (answers) => answers.menuChoice === 'Add a Role',
+    // Other role prompts
+  },
+  // Add Employee Prompt
+  {
+    type: 'input',
+    name: 'firstName',
+    message: 'Enter the first name of the new employee:',
+    when: (answers) => answers.menuChoice === 'Add an Employee',
+    // Other employee prompts
+  },
+
+  
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Function Calls for inquirer prompts on selection for the users
 
