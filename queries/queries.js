@@ -88,7 +88,20 @@ function addDepartment(departmentName) {
 
 // add Role
 
-function addRole 
+function addRole(title, salary, departmentId) {
+    console.log('Adding role:', title, salary, departmentId); // Debugging line
+
+    const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
+    connection.query(query, [title, salary, departmentId], (err, result) => {
+        if (err) {
+            console.error('Error adding role to the database: ' + err);
+            // handle error
+        } else {
+            console.log(`Role added: ${title}`);
+            // handle success
+        }
+    });
+}
 
 
 
@@ -115,4 +128,4 @@ function addRole
 
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment };
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole };

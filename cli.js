@@ -20,7 +20,7 @@ const mainMenu = [
       'Exit'
     ]
   },
-  // Department Prompt 
+  //            Department Prompt 
 
   {
     type: 'input', 
@@ -34,14 +34,46 @@ const mainMenu = [
       return true;
     },
   },
+
+  //              New Role Prompt 
   {
     type: 'input',
-    name: 'title',
+    name: 'roleTitle',
     message: 'Enter the title of the new role:',
     when: (answers) => answers.menuChoice === 'Add Role',
-    // Other role prompts
+    validate: input => {
+      if (input.trim() === '') {
+        return 'Role title cannot be empty';
+      }
+      return true;
+    }  
   },
-  // Add Employee Prompt
+  {
+    type: 'input',
+    name: 'roleSalary',
+    message: 'Enter the salary for the new role:',
+    when: (answers) => answers.menuChoice === 'Add Role', 
+    validate: input => {
+      if (!input.match(/^\d+$/)) {
+        return 'Please enter a valid salary. Please use numbers only';
+      }
+      return true;
+    }
+  },
+ {
+  type: 'input',
+  name:'departmentId',
+  message: 'Enter the department ID for the new role:',
+  when: (answers) => answers.menuChoice === 'Add Role',
+  validate: input => {
+    if (!input.match(/^\d+$/)) {
+      return 'Please enter a valid Department ID, Please use numbers only';
+    }
+    return true; 
+  }
+ },
+  
+ //                Add Employee Prompt
   {
     type: 'input',
     name: 'firstName',
@@ -106,30 +138,69 @@ async function start() {
         break;
 
       case 'Add Role':
+        const roleAnswers = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'roleTitle',
+            message: 'Enter the title of the new role:',
+            when: (answers) => answers.menuChoice === 'Add Role',
 
-      
-      // Logic for adding role 
-      
-      
-        await addRole();
+            validate: input => {
+              if (input.trim() === '') {
+                return 'Role title cannot be empty';
+              }
+              return true;
+            }  
+          },
+          {
+            type: 'input',
+            name: 'roleSalary',
+            message: 'Enter the salary for the new role:',
+            when: (answers) => answers.menuChoice === 'Add Role',
+            validate: input => {
+              if (!input.match(/^\d+$/)) {
+                return 'Please enter a valid salary. Please use numbers only';
+              }
+              return true;
+            }
+          },
+         {
+          type: 'input',
+          name:'departmentId',
+          message: 'Enter the department ID for the new role:',
+          when: (answers) => answers.menuChoice === 'Add Role',
+          validate: input => {
+            if (!input.match(/^\d+$/)) {
+              return 'Please enter a valid Department ID, Please use numbers only';
+            }
+            return true; 
+          }
+        }
+        ]);
+        
+        console.log(roleAnswers);
+        
+        
+        //await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
         break;
-      case 'Add Employee':
+        case 'Add Employee':
       
-      // Logic for adding Employee 
+        // Logic for adding Employee 
       
-      await addEmployee();
-        break;
-      case 'Update Employee Role':
+        await addEmployee();
+          break;
+       case 'Update Employee Role':
         
       
-      // Logic for updating Employee 
+
+        // Logic for updating Employee 
         
         
         await updateEmployeeRole();
         break;
-      case 'Exit':
-        console.log('Till Next Time Mr. Jones');
-        process.exit(0);
+        case 'Exit':
+          console.log('Till Next Time Mr. Jones');
+          process.exit(0);
     }
   } catch (error) {
     console.log('Woah, Something is wrong here ' + error);
