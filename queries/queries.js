@@ -94,18 +94,18 @@ function addRole(title, salary, departmentId) {
 
     const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
 
-    connection.query(query, [title, salary, departmentId], (err, result) => {
-        if (err) {
-            console.error('Error adding role to the database: ' + err);
-            // handle error
-        } else {
-            console.log(`Role added: ${title}`);
-            // handle success
-        }
+    return new Promise((resolve, reject) => {
+        connection.query(query, [title, salary, departmentId], (err, result) => {
+            if (err) {
+                console.error('Error adding role to the database: ' + err);
+                reject(err); // Reject the promise on error
+            } else {
+                console.log(`Role added: ${title}`);
+                resolve(result); // Resolve the promise on success
+            }
+        });
     });
 }
-
-
 
 
 
