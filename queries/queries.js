@@ -3,13 +3,11 @@
 // The workflow will take you this way
 
 
-
 //                      VIEW FUNCTIONS 
 
 const connection = require('../db/connection.js');
 
 // View Departments 
-
 function viewDepartments() {
     const query = 'SELECT * FROM department';
 
@@ -31,6 +29,7 @@ function viewDepartments() {
 // View Role Table 
 
 function viewRoles() {
+
     const query = 'SELECT * FROM role';
   
     connection.query(query, (err, results) => {
@@ -40,10 +39,11 @@ function viewRoles() {
       }
   
       console.log('\nRoles:\n');
-      console.table(results); // Display results as a table
+      // Display results as a table
+      console.table(results);
   
-      // Return to the main menu or perform other actions
-      // You can call a function here to navigate back to the main menu
+      //  NEED TO ADD --> Return to the main menu or othe feautures 
+      
     });
   }
 
@@ -51,6 +51,7 @@ function viewRoles() {
 // View all Employees 
 
 function viewAllEmployees() {
+    // SQL query to SELECT employee table 
     const query = 'SELECT * FROM employee';
 
     connection.query(query, (err, results) => {
@@ -59,7 +60,8 @@ function viewAllEmployees() {
             return;
         }
         console.log('\nEmployees\n');
-        console.table(results); // Display Employee table 
+        // Display Employee table
+        console.table(results);  
     })
 }
 
@@ -87,21 +89,17 @@ function addDepartment(departmentName) {
 
 // add Role
 
-//INSERT INTO role (title, salary, department_id) VALUES ('Software Engineer', 70000, 1);
-
 function addRole(title, salary, departmentId) {
-    console.log('Adding role:', title, salary, departmentId); // Debugging line
-
+    console.log('Adding role:', title, salary, departmentId); // Debugging -_- 
     const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
-
-    return new Promise((resolve, reject) => {
-        connection.query(query, [title, salary, departmentId], (err, result) => {
-            if (err) {
+        return new Promise((resolve, reject) => {
+            connection.query(query, [title, salary, departmentId], (err, result) => {
+                if (err) {
                 console.error('Error adding role to the database: ' + err);
-                reject(err); // Reject the promise on error
-            } else {
+                reject(err); // Reject the promise and we are sad :(
+                } else {
                 console.log(`Role added: ${title}`);
-                resolve(result); // Resolve the promise on success
+                resolve(result); // Resolve the promise and away we go !! 
             }
         });
     });
