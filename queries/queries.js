@@ -70,7 +70,6 @@ function viewAllEmployees() {
 
 
 // add a Department to db 
-
 function addDepartment(departmentName) {
     const query ='INSERT INTO department (name) VALUE (?)';
     return new Promise ((resolve, reject) => {
@@ -88,10 +87,13 @@ function addDepartment(departmentName) {
 
 // add Role
 
+//INSERT INTO role (title, salary, department_id) VALUES ('Software Engineer', 70000, 1);
+
 function addRole(title, salary, departmentId) {
     console.log('Adding role:', title, salary, departmentId); // Debugging line
 
     const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
+
     connection.query(query, [title, salary, departmentId], (err, result) => {
         if (err) {
             console.error('Error adding role to the database: ' + err);

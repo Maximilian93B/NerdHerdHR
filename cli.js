@@ -19,14 +19,14 @@ const mainMenu = [
       'Update Employee Role',
       'Exit'
     ]
-  },
+  }, 
   //            Department Prompt 
 
   {
     type: 'input', 
     name: 'departmentName', 
     message: 'Enter the name of the new Department:',
-    when: (answers) => answers.menuChoice === 'Add Deprartment',
+    when: (answers) => answers.menuChoice === 'Add Department',
     validate: (input) => {
       if (input.trim() === '') {
         return 'Department name cannot be empty.';
@@ -35,7 +35,7 @@ const mainMenu = [
     },
   },
 
-  //              New Role Prompt 
+  //       New Role Prompt 
   {
     type: 'input',
     name: 'roleTitle',
@@ -46,7 +46,7 @@ const mainMenu = [
         return 'Role title cannot be empty';
       }
       return true;
-    }  
+    },  
   },
   {
     type: 'input',
@@ -58,7 +58,7 @@ const mainMenu = [
         return 'Please enter a valid salary. Please use numbers only';
       }
       return true;
-    }
+    },
   },
  {
   type: 'input',
@@ -70,7 +70,7 @@ const mainMenu = [
       return 'Please enter a valid Department ID, Please use numbers only';
     }
     return true; 
-  }
+  },
  },
   
  //                Add Employee Prompt
@@ -137,52 +137,51 @@ async function start() {
         await addDepartment(departmentName);
         break;
 
-      case 'Add Role':
-        const roleAnswers = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'roleTitle',
-            message: 'Enter the title of the new role:',
-            when: (answers) => answers.menuChoice === 'Add Role',
-
-            validate: input => {
-              if (input.trim() === '') {
-                return 'Role title cannot be empty';
+        case 'Add Role':
+          console.log('Before role prompts'); 
+          const roleAnswers = await inquirer.prompt([
+            {
+              type: 'input',
+              name: 'roleTitle',
+              message: 'Enter the title of the new role:',
+              validate: input => {
+                if (input.trim() === '') {
+                  return 'Role title cannot be empty';
+                }
+                return true;
+              }  
+            },
+            {
+              type: 'input',
+              name: 'roleSalary',
+              message: 'Enter the salary for the new role:',
+              validate: input => {
+                if (!input.match(/^\d+$/)) {
+                  return 'Please enter a valid salary. Please use numbers only';
+                }
+                return true;
               }
-              return true;
-            }  
-          },
-          {
-            type: 'input',
-            name: 'roleSalary',
-            message: 'Enter the salary for the new role:',
-            when: (answers) => answers.menuChoice === 'Add Role',
-            validate: input => {
-              if (!input.match(/^\d+$/)) {
-                return 'Please enter a valid salary. Please use numbers only';
+            },
+            {
+              type: 'input',
+              name: 'departmentId',
+              message: 'Enter the department ID for the new role:',
+              validate: input => {
+                if (!input.match(/^\d+$/)) {
+                  return 'Please enter a valid Department ID, Please use numbers only';
+                }
+                return true; 
               }
-              return true;
             }
-          },
-         {
-          type: 'input',
-          name:'departmentId',
-          message: 'Enter the department ID for the new role:',
-          when: (answers) => answers.menuChoice === 'Add Role',
-          validate: input => {
-            if (!input.match(/^\d+$/)) {
-              return 'Please enter a valid Department ID, Please use numbers only';
-            }
-            return true; 
-          }
-        }
-        ]);
+          ]);
         
-        console.log(roleAnswers);
+          
+          console.log(roleAnswers); // Debugging line
+          console.log('Before Calling addRole')
+          await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
+          console.log ('After Calling addRoll')
+          break;
         
-        
-        //await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
-        break;
         case 'Add Employee':
       
         // Logic for adding Employee 
