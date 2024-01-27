@@ -8,20 +8,23 @@
 
 const connection = require('../db/connection.js');
 
-//View Department table function 
+// View Departments 
 
 function viewDepartments() {
     const query = 'SELECT * FROM department';
 
-    connection.query(query, (err, results)=>{
-        if(err){
-            console.log ('Whoops! Something happened when trying to View Departments: ' + err);
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.log ('What a minute.. We can select from departments;' + err);
             return;
         }
-
-        console.table ('\nDepartments:\n');
-        console.table(results); // Display results as a table 
-    });
+        
+        console.log('\nDepartments:\n');
+        console.table(results);
+    
+    
+    
+    })
 }
 
 
@@ -62,6 +65,7 @@ function viewAllEmployees() {
 
 
 
+
 //                      ADD FUNCTIONS 
 
 
@@ -69,13 +73,13 @@ function viewAllEmployees() {
 
 function addDepartment(departmentName) {
     const query ='INSERT INTO department (name) VALUE (?)';
-    return new Promise ((resolve, reject)=>{
+    return new Promise ((resolve, reject) => {
         connection.query(query, [departmentName], (err,result) =>{
             if (err) {
                 console.log('Error Adding to db ', err);
                 reject(err);
             } else {
-                console.log('Perfect! More Departments..')
+                console.log('Perfect! More Departments..Department added:',$({departmentName}));
                 resolve(result);
             }
         });
@@ -84,7 +88,7 @@ function addDepartment(departmentName) {
 
 // add Role
 
-
+function addRole 
 
 
 

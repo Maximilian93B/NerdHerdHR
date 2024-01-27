@@ -26,7 +26,7 @@ const mainMenu = [
     type: 'input', 
     name: 'departmentName', 
     message: 'Enter the name of the new Department:',
-    when: (answers) => answers.menuChoice === 'Add a Deprartment',
+    when: (answers) => answers.menuChoice === 'Add Deprartment',
     validate: (input) => {
       if (input.trim() === '') {
         return 'Department name cannot be empty.';
@@ -38,7 +38,7 @@ const mainMenu = [
     type: 'input',
     name: 'title',
     message: 'Enter the title of the new role:',
-    when: (answers) => answers.menuChoice === 'Add a Role',
+    when: (answers) => answers.menuChoice === 'Add Role',
     // Other role prompts
   },
   // Add Employee Prompt
@@ -46,7 +46,7 @@ const mainMenu = [
     type: 'input',
     name: 'firstName',
     message: 'Enter the first name of the new employee:',
-    when: (answers) => answers.menuChoice === 'Add an Employee',
+    when: (answers) => answers.menuChoice === 'Add Employee',
     // Other employee prompts
   },
 
@@ -86,16 +86,45 @@ async function start() {
         case 'View All Employees':
           await viewAllEmployees();
           break;
-      case 'Add a Department':
-        await addDepartment();
+
+      case 'Add Department':
+          //Prompt from the departmentName 
+        const {departmentName} = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'departmentName',
+            message: 'Enter the name of the new Department:',
+            validate: input => {
+            if (input.trim() === '') {
+              return 'Department name cannot be empty.';
+            }
+              return true;
+            }
+          }
+        ]);
+        await addDepartment(departmentName);
         break;
-      case 'Add a Role':
+
+      case 'Add Role':
+
+      
+      // Logic for adding role 
+      
+      
         await addRole();
         break;
-      case 'Add an Employee':
-        await addEmployee();
+      case 'Add Employee':
+      
+      // Logic for adding Employee 
+      
+      await addEmployee();
         break;
-      case 'Update an Employee Role':
+      case 'Update Employee Role':
+        
+      
+      // Logic for updating Employee 
+        
+        
         await updateEmployeeRole();
         break;
       case 'Exit':
