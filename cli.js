@@ -1,7 +1,7 @@
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees , updateEmployeeRole } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -91,7 +91,7 @@ async function start() {
      
         case 'Update Employee Role':
         // Logic for updating Employee Role...
-        await updateEmployeeRole();
+        await promptUpdateEmployeeRole();
         break;
      
         case 'Exit':
@@ -159,7 +159,7 @@ async function promptAddRole() {
 }
 
 
-//           Add Employee 
+//           ADD EMPLOYEE 
 // Thhis function prompts the user to enter valid information to add Employee to the db
 // Using same return logic as the others
 
@@ -231,3 +231,38 @@ async function promptAddRole() {
   console.log( 'Employee Data', employeeData)
   return employeeData;
 }
+
+// UPDATE EMPLOYEE ROLE 
+
+// the getEmployees() and getRoles() can be found in queries.js 
+
+  async function promptUpdateEmployeeRole() {
+    console.log('Updating an Employee/s Role');
+
+    // Get lists of employees and roles 
+    const employees = await  getEmployees();
+    console.log(employees); // Debugging line
+    const roles = await getRoles(); 
+
+    try {
+      const answers = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'employeeId',
+          message: 'Select the employee whose role you want to update:',
+          choices: employees // Array of {name , value }
+        },
+        {
+          type: 'list',
+          name: 'roleId',
+          message: 'Select the new role for the employee:',
+          choices: roles // Same as employees 
+        }, 
+      ]);
+
+    console.log('Employee Update', answers); // Corrected to log 'answers'
+    await updateEmployeeRole(answers.employeeId, answers.roleId);
+    } catch (error) {
+      console.error('An error occurred:', error);
+  }
+};

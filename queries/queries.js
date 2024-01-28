@@ -105,12 +105,6 @@ function addRole(title, salary, departmentId) {
     });
 }
 
-// add Employee
-
-
-
-// Other functions...
-
 // Add an Employee to the database
 function addEmployee(firstName, lastName, roleId, managerId, salary) {
     const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id, salary) VALUES (?, ?, ?, ?, ?)';
@@ -128,27 +122,76 @@ function addEmployee(firstName, lastName, roleId, managerId, salary) {
     });
 }
 
+// Update Employee Role 
+
+// Fetch employee data from db first 
+
+    function getEmployees() {
+        const query = 'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee';
+    
+        return new Promise((resolve, reject) => {
+            connection.query(query, (err, results) => {
+                if (err) {
+                    console.error('Error fetching employees: ' + err);
+                    reject(err);
+                } else {
+                    // Map the results to the  format for Inquirer
+                    const employeeChoices = results.map(employee => ({
+                        name: employee.name,
+                        value: employee.id
+                    }));
+                    resolve(employeeChoices);
+            }
+        });
+    });
+}
+
+
+
+
+// Fetch Role data from db 
+
+function getRoles() {
+    const query = 'SELECT id, title FROM role';
+
+    return new Promise ((resolve , reject) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                console.log(' Error Fetching roles' + err);
+                reject(err);
+            } else { 
+                const roleChoices = results.map(role => ({
+                    name: role.title,
+                    value: role.id
+                }));
+                resolve(roleChoices);
+            }
+        });
+    });
+}
+
+
+// UPDATE employee role 
+
+function updateEmployeeRole(employeeId, newRoleId) {
+    const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [newRoleId, employeeId], (err, result) => {
+            if (err) {
+                console.error('Error updating employee\'s role: ' + err);
+                reject(err);
+            } else {
+                console.log('Employee\'s role updated successfully.');
+                resolve(result);
+            }
+        });
+    });
+}
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee };
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles ,updateEmployeeRole };
