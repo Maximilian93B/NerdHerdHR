@@ -105,6 +105,28 @@ function addRole(title, salary, departmentId) {
     });
 }
 
+// add Employee
+
+
+
+// Other functions...
+
+// Add an Employee to the database
+function addEmployee(firstName, lastName, roleId, managerId, salary) {
+    const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id, salary) VALUES (?, ?, ?, ?, ?)';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [firstName, lastName, roleId, managerId || null, salary], (err, result) => {
+            if (err) {
+                console.error('Error adding employee to the database: ' + err);
+                reject(err);
+            } else {
+                console.log(`Employee added: ${firstName} ${lastName}`);
+                resolve(result);
+            }
+        });
+    });
+}
 
 
 
@@ -128,4 +150,5 @@ function addRole(title, salary, departmentId) {
 
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole };
+
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee };
