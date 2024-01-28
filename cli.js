@@ -85,7 +85,8 @@ async function start() {
       
         case 'Add Employee':
         // Logic for adding Employee...
-        await addEmployee();
+        const employeeData = await addEmployeeAnswers();
+        await addEmployee(employeeData.firstName, employeeData.lastName, employeeData.roleId, employeeData.managerId, employeeData.salary); 
         break;
      
         case 'Update Employee Role':
@@ -153,6 +154,80 @@ async function promptAddRole() {
     }
   ]);
   // log answers to display input  
-  console.log("Role Answers:", roleAnswers);
+  console.log('Role Answers:', roleAnswers);
   return roleAnswers;
+}
+
+
+//           Add Employee 
+// Thhis function prompts the user to enter valid information to add Employee to the db
+// Using same return logic as the others
+
+ async function addEmployeeAnswers() {
+  console.log('Adding a new Employee');
+
+  const employeeData = await inquirer.prompt([
+  
+    {
+      type: 'input',
+      name: 'firstName',
+      message: 'Please enter the employee\'s first name:',
+      validate: input => {
+          if (input.trim() === '') {
+              return 'First name cannot be empty.';
+          }
+          return true;
+      }
+  },
+  
+  {
+    type: 'input',
+    name: 'lastName',
+    message: 'Please enter the employee\'s last name:',
+    validate: input => {
+        if (input.trim() === '') {
+            return 'Last name cannot be empty.';
+        }
+        return true;
+    }
+  },  
+  
+  {
+    type: 'input',
+    name: 'roleId',
+    message: 'Please enter the Employees Role ID',
+    validate: input => {
+      if (input.trim() === '') {
+          return 'First name cannot be empty.';
+      }
+      return true;
+  }
+  },
+  
+  {
+    type: 'input',
+    name: 'managerId',
+    message: ' Enter the manager ID for the employee:  ', 
+    validate: input => {
+      if (input.trim() === '') {
+          return 'Last name cannot be empty.';
+      }
+      return true;
+  }
+  },
+  
+  {
+    type: 'input',
+    name: 'salary',
+    message: ' Enter the salary for the Employee ', 
+    validate: input => {
+      if (!input.match(/^\d+(\.\d{1,2})?$/)) {
+          return 'Please enter a valid salary. Use numbers only, up to 2 decimal places.';
+      }
+      return true;
+    }
+  }
+])
+  console.log( 'Employee Data', employeeData)
+  return employeeData;
 }
