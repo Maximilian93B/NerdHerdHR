@@ -209,16 +209,40 @@ function getDepartments() {
                 console.error('Error fetching departments: ' + err);
                 reject(err);
             } else {
-                // Map the results to inquirer format 
-                const departmentChoices = results.map(department => ({
-                    name: department.name,
-                    value: department.id
+                const departmentChoices = results.map(dept => ({
+                    name: dept.name,
+                    value: dept.id
                 }));
                 resolve(departmentChoices);
             }
         });
     });
 }
+
+
+ // fetch employees by department 
+
+ function getEmployeesByDepartment(departmentId) {
+    const query = `
+        SELECT e.id, CONCAT(e.first_name, ' ', e.last_name) AS employee_name, r.title AS role_title
+        FROM employee e
+        INNER JOIN role r ON e.role_id = r.id
+        INNER JOIN department d ON r.department_id = d.id
+        WHERE d.id = ?;
+    `;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [departmentId], (err, results) => {
+            if (err) {
+                console.error('Error fetching employees by department: ' + err);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
 
 
 
@@ -297,4 +321,4 @@ function getSupervisor(managerId) {
 
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , updateEmployeeRole , updateEmployeeMan, getSupervisor};
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor};
