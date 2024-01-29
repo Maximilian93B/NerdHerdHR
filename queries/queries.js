@@ -312,13 +312,60 @@ function getSupervisor(managerId) {
     });
 };
 
+//                  DELETE from db 
+
+// Delete Department 
+
+function deleteDepartments(departmentId) {
+    const query = 'DELETE FROM department WHERE id = ?';
+
+    return new Promise((resolve , reject) => {
+        connection.query(query, [departmentId], (err,result) => {
+            if (err) {
+                console.log('Error Deleting department: ' + err);
+            } else {
+                console.log ('Department deleted from db' );
+                resolve(result)
+            }
+        })
+    })
+}
+
+// Delete Role 
+
+function deleteRole(roleId) {
+    const query = 'DELETE FROM role WHERE id = ?';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [roleId], (err, result) => {
+            if (err) {
+                console.error('Error deleting role: ' + err);
+                reject(err);
+            } else {
+                console.log('Role deleted successfully.');
+                resolve(result);
+            }
+        });
+    });
+}
+
+// Delete Employee 
+
+function deleteEmployee() {
+    const query =  "DELETE FROM employee WHERE id = ?";
+
+    return new Promise ((resolve, reject ) => {
+        connection.query(query, [employeeId], (err, result) => {
+            if (err) {
+                console.error('Error deleting employee', + err)
+                reject(err);
+            } else {
+                console.log('Employee deleted'); 
+                resolve(result);
+            }
+        });
+    });
+}
 
 
-
-
-
-
-
-
-
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor};
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor, deleteDepartments , deleteRole , deleteEmployee};

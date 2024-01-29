@@ -1,7 +1,22 @@
+//Dev Notes 
+// add Delete functions to main menu and cases 
+
+// clean up getDepartments 
+
+// add stylign and figlet for headers etc.. 
+
+
+// add arogant feeback via console.log to give personality 
+
+
+
+
+
+
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan , getSupervisor } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan , getSupervisor , deleteDepartments , deleteEmployee , deleteRole } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -364,3 +379,55 @@ async function promptGetDepartments() {
   }
 }
 
+async function promptDeleteDepartment() {
+  const departments = await getDepartments();
+
+  const { departmentId } = await inquirer.prompt([
+    {
+      type:'list',
+      name: 'departmentId', 
+      choices: departments 
+    }
+  ]);
+
+  await deleteDepartments(departmentId);
+  console.log('Department has benn deleted')
+}
+
+
+// Delete Role e
+
+async function promptDeleteRole() {
+  const roles = await getRoles(); 
+
+  const { roleId } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'roleId',
+      message: 'Please select a role you would like to delete',
+      choices: roles
+    }
+  ]);
+
+    await deleteRole(roleId);
+    console.log('Role has been deleted');
+}
+
+
+ // Delete Employee 
+
+ async function promptDeleteEmployee() {
+  const employees = await getEmployees();
+
+  const { employeeId } = await inquirer.prompt([
+    {
+      type:'list',
+      name: 'employeeId',
+      message: ' Please select the employee you would like to delete',
+      choices: employees
+    }
+  ]);
+    
+    await deleteEmployee(employeeId);
+    console.log('Employee has been deleted.'); 
+ }
