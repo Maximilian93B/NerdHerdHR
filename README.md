@@ -1,6 +1,20 @@
 
 # NerdHerdHR 
 
+
+
+## ![Image description](Path to image)
+
+
+
+
+
+## [Link text](URL)
+
+
+
+
+
 ## Table of Contents
 - [Description](#description)
 - [Installation](#installation)
