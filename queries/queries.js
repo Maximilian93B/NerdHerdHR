@@ -248,9 +248,11 @@ function updateEmployeeMan(employeeId, newManagerId) {
 
 
 function getSupervisor(managerId) {
-    const query = 'SELECT e.id CONCAT (e.first_name, " " , e.last_name) AS name FROM e.manager_id = ?'; 
+    const query = "SELECT e.id, CONCAT(e.first_name, ' ', e.last_name) AS name FROM employee e WHERE e.manager_id = ?";
+
 
     return new Promise ((resolve, reject) => {
+       // console.log(query); // Added for debugging 
         connection.query(query, [managerId], (err , results) => {
             if (err) {
                 console.error('Eror fetching employee by manager');
