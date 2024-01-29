@@ -1,7 +1,7 @@
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers , updateEmployeeRole , updateEmployeeMan , getSupervisor } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments ,  updateEmployeeRole , updateEmployeeMan , getSupervisor } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -20,7 +20,7 @@ const mainMenu = [
       'Update Employee Role',
       'Update Employee Manager',
       'Search Employees by Manager',
-      
+      "Search by Department",
       'Exit'
     ]
   },
@@ -107,6 +107,10 @@ async function start() {
           await promptGetSupervisor();
           break;
 
+          case       'Search by Department':
+            // Logic for updating Employee Role...
+            await promptGetDepartment();
+            break;
 
         case 'Exit':
           // Exit the promgram 
@@ -332,5 +336,29 @@ async function promptGetSupervisor() {
   } else {
     // If no manager, log no employee found under this manager
     console.log('No employee/s found for this manager.');
+  }
+}
+
+
+// Get employees by Departments
+
+
+async function promptGetDepartment() {
+  const departments = await getDepartments();
+
+  const { departmentId } = await inquirer.prompt([
+      {
+          type: 'list',
+          name: 'departmentId',
+          message: 'Select a department to view its employees:',
+          choices: departments
+      }
+  ]);
+
+  const employees = await getDepartments(departmentId);
+  if (employees.length > 0) {
+      console.table(employees);
+  } else {
+      console.log('No employees found in this department.');
   }
 }
