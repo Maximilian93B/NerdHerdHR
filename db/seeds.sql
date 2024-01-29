@@ -22,5 +22,16 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('John'
 
 
 
+
+-- the rest of the seeds are not neccessary in here, but i did it for me 
+
+
+
 -- Sample seeds for UPDATE manager_id of a employee 
 UPDATE employee SET manager_id = ? WHERE id = ?;
+
+
+-- sample seed for getsupervisor 
+SELECT e.id, CONCAT(e.first_name, ' ', e.last_name) AS name 
+FROM employee e 
+WHERE e.manager_id = ?;
