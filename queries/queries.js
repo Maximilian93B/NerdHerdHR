@@ -198,6 +198,29 @@ function getManagers() {
     });
 }
 
+// Fetch Departments 
+
+function getDepartments() {
+    const query = 'SELECT id, name FROM department';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching departments: ' + err);
+                reject(err);
+            } else {
+                // Map the results to inquirer format 
+                const departmentChoices = results.map(department => ({
+                    name: department.name,
+                    value: department.id
+                }));
+                resolve(departmentChoices);
+            }
+        });
+    });
+}
+
+
 
 // UPDATE employee role 
 
@@ -274,4 +297,4 @@ function getSupervisor(managerId) {
 
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , updateEmployeeRole , updateEmployeeMan, getSupervisor};
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , updateEmployeeRole , updateEmployeeMan, getSupervisor};
