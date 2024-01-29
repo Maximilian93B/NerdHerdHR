@@ -121,11 +121,10 @@ function addEmployee(firstName, lastName, roleId, managerId, salary) {
         });
     });
 }
+ 
+//                          FETCH FUNCTIONS 
 
-// Update Employee Role 
-
-// Fetch employee data from db first 
-
+    // Fetch employee from db   
     function getEmployees() {
         const query = 'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee';
     
@@ -147,10 +146,7 @@ function addEmployee(firstName, lastName, roleId, managerId, salary) {
 }
 
 
-
-
 // Fetch Role data from db 
-
 function getRoles() {
     const query = 'SELECT id, title FROM role';
 
@@ -165,6 +161,38 @@ function getRoles() {
                     value: role.id
                 }));
                 resolve(roleChoices);
+            }
+        });
+    });
+}
+
+
+// Fetch Managers 
+
+// SQL Query Debreif // 
+
+// In this function SELECT DISTINCT query will be used 
+// INNER JOIN will allow us to join two rows from multiple tables 
+
+function getManagers() {
+    const query = `
+    SELECT DISTINCT e.id, CONCAT(e.first_name, ' ', e.last_name) AS name 
+    FROM employee e
+    INNER JOIN employee m ON e.id = m.manager_id;
+`;
+
+    return new Promise ((resolve, reject ) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching managers:' + err); 
+                reject(err);
+
+            } else { 
+                const managerChoices = results.map(manager => ({
+                    name: manager.name,
+                    value: manager.id
+                }));
+                resolve(managerChoices);
             }
         });
     });
@@ -210,7 +238,38 @@ function updateEmployeeMan(employeeId, newManagerId) {
     });
 }
 
+// Get employee by manager 
+
+// the const query is much different then the rest so i will break it down here 
+// usine e.id will select the coloumn id from the employee table 
+// CONCAT has been used here before but this just allows to concatenate the first and last name colunms for each employee 
+// The rest of the query is the same. 
 
 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , updateEmployeeRole , updateEmployeeMan };
+function getSupervisor(managerId) {
+    const query = 'SELECT e.id CONCAT (e.first_name, " " , e.last_name) AS name FROM e.manager_id = ?'; 
+
+    return new Promise ((resolve, reject) => {
+        connection.query(query, [managerId], (err , results) => {
+            if (err) {
+                console.error('Eror fetching employee by manager');
+                reject(err);
+            } else {
+                console.log('Fetched Employee by manager');
+                resolve(results);
+            }
+        });
+    });
+};
+
+
+
+
+
+
+
+
+
+
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , updateEmployeeRole , updateEmployeeMan, getSupervisor};

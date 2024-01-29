@@ -1,7 +1,7 @@
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees , updateEmployeeRole , updateEmployeeMan } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers , updateEmployeeRole , updateEmployeeMan , getSupervisor } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -19,6 +19,8 @@ const mainMenu = [
       'Add Employee',
       'Update Employee Role',
       'Update Employee Manager',
+      'Search Employees by Manager',
+      
       'Exit'
     ]
   },
@@ -99,7 +101,13 @@ async function start() {
         // Logic for updating Employee Role...
         await promptUpdateEmployeeMan();
         break;
-     
+        
+        case 'Search Employees by Manager':
+          // Logic for updating Employee Role...
+          await promptGetSupervisor();
+          break;
+
+
         case 'Exit':
           // Exit the promgram 
         console.log('Till Next Time Mr. Jones');
@@ -299,3 +307,30 @@ async function promptUpdateEmployeeMan() {
       console.log ('updated manager successfully'); 
 
   }
+
+// Search Employees by Manager 
+
+async function promptGetSupervisor() {
+
+  // use getManagers() to fetch managers  
+  const managers = await getManagers();
+
+  const { managerId } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'managerId',
+      message: ' Select a manager and view their employee/s',
+      choices: managers
+    }
+  ]);
+  
+  // wait for getSupervisor() to fetch selected manager from db 
+  const employees = await getSupervisor(managerId);
+  // if the returned object has data, print the data to a table 
+  if(employees.length > 0) {
+    console.table(employees);
+  } else {
+    // If no manager, log no employee found under this manager
+    console.log('No employee/s found for this manager.');
+  }
+}
