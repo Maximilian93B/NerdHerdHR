@@ -19,3 +19,8 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('Kat',
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('Len', 'Jones', 2, NULL, 50000);
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('Tay', 'Doe', 3, NULL, 60000);
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('John', 'Jabocs', 1, NULL, 70000);
+
+
+
+-- Sample seeds for UPDATE manager_id of a employee 
+UPDATE employee SET manager_id = ? WHERE id = ?;

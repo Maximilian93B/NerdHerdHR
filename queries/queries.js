@@ -189,9 +189,28 @@ function updateEmployeeRole(employeeId, newRoleId) {
     });
 }
 
+//                      BONUS FEAUTRES 
+
+
+// update employee Managers 
+
+function updateEmployeeMan(employeeId, newManagerId) {
+    const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [newManagerId, employeeId], (err, result) => {
+            if (err) {
+                console.error('Error updating employee\'s manager: ' + err);
+                reject(err);
+            } else {
+                console.log('Employee\'s manager updated successfully.');
+                resolve(result);
+            }
+        });
+    });
+}
 
 
 
 
-
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles ,updateEmployeeRole };
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , updateEmployeeRole , updateEmployeeMan };
