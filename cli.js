@@ -1,7 +1,7 @@
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees , updateEmployeeRole } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees , updateEmployeeRole , updateEmployeeMan } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -18,6 +18,7 @@ const mainMenu = [
       'Add Role',
       'Add Employee',
       'Update Employee Role',
+      'Update Employee Manager',
       'Exit'
     ]
   },
@@ -92,6 +93,11 @@ async function start() {
         case 'Update Employee Role':
         // Logic for updating Employee Role...
         await promptUpdateEmployeeRole();
+        break;
+
+        case 'Update Employee Manager':
+        // Logic for updating Employee Role...
+        await promptUpdateEmployeeMan();
         break;
      
         case 'Exit':
@@ -266,3 +272,30 @@ async function promptAddRole() {
       console.error('An error occurred:', error);
   }
 };
+
+
+// Update Employee manager_id 
+
+async function promptUpdateEmployeeMan() {
+    // Get list of employees for prompt 
+    const employees = await getEmployees();
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list', 
+        name: 'employeeId',
+        message: 'Select employee whose manager you would like to change',
+        choices: employees
+      },
+      {
+        type: 'list',
+        name: 'newManagerId',
+        message: 'Selecet the new manager for the employee ',
+        choices: employees
+      },
+    ]);
+
+      await updateEmployeeMan(answers.employeeId, answers.newManagerId);
+      console.log ('updated manager successfully'); 
+
+  }
