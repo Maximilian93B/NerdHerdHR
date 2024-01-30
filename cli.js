@@ -16,7 +16,7 @@
 
 //           INQUIRER PROMPTS 
 const inquirer = require('inquirer');
-const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan , getSupervisor , deleteDepartments , deleteEmployee , deleteRole } = require('./queries/queries.js');
+const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan , getSupervisor , deleteDepartments , deleteEmployee , deleteRole , departmentSum } = require('./queries/queries.js');
 
 
 //                MAIN MENU Stucture
@@ -39,6 +39,7 @@ const mainMenu = [
       'Delete Department',
       'Delete Role',
       'Delete Employee',
+      'Department Salary Totals',
       'Exit'
     ]
   },
@@ -144,6 +145,11 @@ async function start() {
                 //Logic for deleting employee 
                 await promptDeleteEmployee();
                 break;
+
+                case 'Department Salary Totals':
+                  //logic for department sum 
+                  await promptDepartmentSum()
+                  break;
 
         case 'Exit':
           // Exit the promgram 
@@ -449,3 +455,21 @@ async function promptDeleteRole() {
     await deleteEmployee(employeeId);
     console.log('Employee has been deleted.'); 
  }
+
+ // Department Sum 
+
+ async function promptDepartmentSum() {
+  const departments = await getDepartments();
+
+  const { departmentId } = await inquirer.prompt([
+      {
+          type: 'list',
+          name: 'departmentId',
+          message: 'Select a department to view its total salary budget:',
+          choices: departments
+      }
+  ]);
+
+  const totalBudget = await departmentSum(departmentId);
+  console.log(`Total Salary Budget for Department: $${totalBudget}`);
+}
