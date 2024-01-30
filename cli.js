@@ -35,7 +35,10 @@ const mainMenu = [
       'Update Employee Role',
       'Update Employee Manager',
       'Search Employees by Manager',
-      "Search by Department",
+      'Search by Department',
+      'Delete Department',
+      'Delete Role',
+      'Delete Employee',
       'Exit'
     ]
   },
@@ -126,6 +129,21 @@ async function start() {
             // Logic for updating Employee Role...
             await promptGetDepartments();
             break;
+
+            case 'Delete Department':
+            // logic for deleting department 
+            await promptDeleteDepartment();
+            break;
+
+            case 'Delete Role':
+              // Logic for deleting role 
+              await promptDeleteRole();
+              break;
+
+              case 'Delete Employee':
+                //Logic for deleting employee 
+                await promptDeleteEmployee();
+                break;
 
         case 'Exit':
           // Exit the promgram 
