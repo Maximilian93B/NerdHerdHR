@@ -80,7 +80,7 @@ function addDepartment(departmentName) {
                 console.log('Error Adding to db ', err);
                 reject(err);
             } else {
-                console.log('Perfect! More Departments..Department added:',$({departmentName}));
+                console.log('Perfect! More Departments..Department added: ' + departmentName);
                 resolve(result);
             }
         });
@@ -124,22 +124,20 @@ function addEmployee(firstName, lastName, roleId, managerId, salary) {
  
 //                          FETCH FUNCTIONS 
 
-    // Fetch employee from db   
-    function getEmployees() {
-        const query = 'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee';
-    
-        return new Promise((resolve, reject) => {
-            connection.query(query, (err, results) => {
-                if (err) {
-                    console.error('Error fetching employees: ' + err);
-                    reject(err);
-                } else {
-                    // Map the results to the  format for Inquirer
-                    const employeeChoices = results.map(employee => ({
-                        name: employee.name,
-                        value: employee.id
-                    }));
-                    resolve(employeeChoices);
+function getEmployees() {
+    const query = 'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching employees: ' + err);
+                reject(err);
+            } else {
+                const employeeChoices = results.map(emp => ({
+                    name: `${emp.name} - ID: ${emp.id}`,
+                    value: emp.id
+                }));
+                resolve(employeeChoices);
             }
         });
     });

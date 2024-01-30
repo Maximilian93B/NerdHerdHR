@@ -100,8 +100,8 @@ async function start() {
       
         case 'Add Role':
           // Prompt for a new role 
-        const roleAnswers = await promptAddRole();
-        await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
+          const roleAnswers = await promptAddRole();
+          await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
         break;
       
         case 'Add Employee':
@@ -413,7 +413,7 @@ async function promptDeleteDepartment() {
 }
 
 
-// Delete Role e
+// Delete Role 
 
 async function promptDeleteRole() {
   const roles = await getRoles(); 
