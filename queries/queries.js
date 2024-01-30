@@ -365,5 +365,31 @@ function deleteEmployee() {
     });
 }
 
+// Get sum of department by salary 
 
-module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor, deleteDepartments , deleteRole , deleteEmployee};
+function departmentSum(departmentId) {
+    const query = `
+        SELECT SUM(r.salary) AS totalBudget
+        FROM employee e
+        INNER JOIN role r ON e.role_id = r.id
+        WHERE r.department_id = ?;
+    `;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [departmentId], (err, results) => {
+            if (err) {
+                console.error('Error calculating department budget: ' + err);
+                reject(err);
+            } else {
+                // The SUM function might return null if there are no employees, so we default to 0
+                const totalBudget = results[0].totalBudget || 0;
+                resolve(totalBudget);
+            }
+        });
+    });
+}
+
+
+
+
+module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor, deleteDepartments , deleteRole , deleteEmployee , departmentSum};
