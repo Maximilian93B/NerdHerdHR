@@ -39,17 +39,23 @@ Refer to live Demo for usage.
 
 ## Features
 
-### View Data:
-View Departments: List all departments.
+## View Data:
+
+### View Departments: 
+List all departments.
 View Roles: Display all roles.
 View All Employees: Show a list of all employees.
 Add Data:
 
-### Add Department: 
-Insert a new department into the database.
-Add Role: Add a new role, including details like title, salary, and associated department.
-Add Employee: Insert a new employee record, including their name, role, manager, and salary.
-Update Data:
+## Add Department: 
+### Insert a new department into the database.
+
+### Add Role: 
+Add a new role, including details like title, salary, and associated department.
+### Add Employee: 
+Insert a new employee record, including their name, role, manager, and salary.
+
+## Update Data:
 
 ### Update Employee Role: 
 Change the role of an existing employee.
@@ -58,8 +64,10 @@ Search Functionality:
 
 ### Search Employees by Manager: 
 List employees who report to a specific manager.
-Search by Department: Display employees working in a particular department.
-Delete Data:
+Display employees working in a particular department.
+
+
+## Delete Data:
 
 ### Delete Department: 
 Remove a department from the database.
