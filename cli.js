@@ -10,6 +10,9 @@
 
 
 
+// Import chalk and figlet 
+const chalk = require('chalk');
+const figlet = require('figlet');
 
 
 
@@ -62,6 +65,20 @@ const mainMenu = [
 ];
 //            START NERDHERD
 async function start() {
+  console.clear();
+
+  console.clear();
+  // Display figlet header 
+  console.log(
+    chalk.green(figlet.textSync(' Nerd Herd HR ', { horizontalLayout: 'full' })));
+
+    //Welcome message 
+
+    console.log(chalk.red(' \n Welcome to NerdHerd HR Management System!'));
+    console.log (chalk.red('\n This application helps you manage HR tasks such as viewing and updating employee details, departments, and roles.'));
+
+    console.log('\n');
+
   try {
     // Display the main menu and capture users choice 
     const { menuChoice } = await inquirer.prompt(mainMenu);
@@ -87,7 +104,7 @@ async function start() {
           {
             type: 'input',
             name: 'departmentName',
-            message: 'Enter the name of the new Department:',
+            message: chalk.red('Enter the name of the new Department:'),
             validate: input => {
               if (input.trim() === '') {
                 return 'Department name cannot be empty.';
