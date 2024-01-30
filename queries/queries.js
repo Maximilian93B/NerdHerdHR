@@ -1,5 +1,5 @@
 // This file containts all queries made to the db. 
-// It is broken down into View, Add , Update , 
+// It is broken down into View , Add , Update , Delete
 // The workflow will take you this way
 
 
@@ -25,8 +25,7 @@ function viewDepartments() {
     })
 }
 
-
-// View Role Table 
+//                  View Role Table 
 
 function viewRoles() {
 
@@ -48,7 +47,7 @@ function viewRoles() {
   }
 
 
-// View all Employees 
+//                View all Employees 
 
 function viewAllEmployees() {
     // SQL query to SELECT employee table 
@@ -71,7 +70,9 @@ function viewAllEmployees() {
 //                      ADD FUNCTIONS 
 
 
-// add a Department to db 
+
+//                   add a Department to db 
+
 function addDepartment(departmentName) {
     const query ='INSERT INTO department (name) VALUE (?)';
     return new Promise ((resolve, reject) => {
@@ -87,7 +88,7 @@ function addDepartment(departmentName) {
     });
 }
 
-// add Role
+//                   add Role
 
 function addRole(title, salary, departmentId) {
     console.log('Adding role:', title, salary, departmentId); // Debugging -_- 
@@ -105,7 +106,8 @@ function addRole(title, salary, departmentId) {
     });
 }
 
-// Add an Employee to the database
+//                  Add an Employee to the database
+
 function addEmployee(firstName, lastName, roleId, managerId, salary) {
     const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id, salary) VALUES (?, ?, ?, ?, ?)';
 
@@ -123,6 +125,9 @@ function addEmployee(firstName, lastName, roleId, managerId, salary) {
 }
  
 //                          FETCH FUNCTIONS 
+
+
+//                          Get Employees
 
 function getEmployees() {
     const query = 'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee';
@@ -144,7 +149,7 @@ function getEmployees() {
 }
 
 
-// Fetch Role data from db 
+//                             Get Role data from db 
 function getRoles() {
     const query = 'SELECT id, title FROM role';
 
@@ -165,7 +170,7 @@ function getRoles() {
 }
 
 
-// Fetch Managers 
+//                              Fetch Managers 
 
 // SQL Query Debreif // 
 
@@ -196,7 +201,7 @@ function getManagers() {
     });
 }
 
-// Fetch Departments 
+//                              Fetch Departments 
 
 function getDepartments() {
     const query = 'SELECT id, name FROM department';
@@ -218,7 +223,7 @@ function getDepartments() {
 }
 
 
- // fetch employees by department 
+ //                         fetch employees by department 
 
  function getEmployeesByDepartment(departmentId) {
     const query = `
@@ -236,48 +241,6 @@ function getDepartments() {
                 reject(err);
             } else {
                 resolve(results);
-            }
-        });
-    });
-}
-
-
-
-
-// UPDATE employee role 
-
-function updateEmployeeRole(employeeId, newRoleId) {
-    const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
-
-    return new Promise((resolve, reject) => {
-        connection.query(query, [newRoleId, employeeId], (err, result) => {
-            if (err) {
-                console.error('Error updating employee\'s role: ' + err);
-                reject(err);
-            } else {
-                console.log('Employee\'s role updated successfully.');
-                resolve(result);
-            }
-        });
-    });
-}
-
-//                      BONUS FEAUTRES 
-
-
-// update employee Managers 
-
-function updateEmployeeMan(employeeId, newManagerId) {
-    const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
-
-    return new Promise((resolve, reject) => {
-        connection.query(query, [newManagerId, employeeId], (err, result) => {
-            if (err) {
-                console.error('Error updating employee\'s manager: ' + err);
-                reject(err);
-            } else {
-                console.log('Employee\'s manager updated successfully.');
-                resolve(result);
             }
         });
     });
@@ -310,9 +273,49 @@ function getSupervisor(managerId) {
     });
 };
 
-//                  DELETE from db 
+//                              UPDATE 
 
-// Delete Department 
+//                          employee role 
+
+function updateEmployeeRole(employeeId, newRoleId) {
+    const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [newRoleId, employeeId], (err, result) => {
+            if (err) {
+                console.error('Error updating employee\'s role: ' + err);
+                reject(err);
+            } else {
+                console.log('Employee\'s role updated successfully.');
+                resolve(result);
+            }
+        });
+    });
+}
+
+
+//                          update employee Managers 
+
+function updateEmployeeMan(employeeId, newManagerId) {
+    const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [newManagerId, employeeId], (err, result) => {
+            if (err) {
+                console.error('Error updating employee\'s manager: ' + err);
+                reject(err);
+            } else {
+                console.log('Employee\'s manager updated successfully.');
+                resolve(result);
+            }
+        });
+    });
+}
+
+//                               DELETE from db 
+
+
+//                              Delete Department 
 
 function deleteDepartments(departmentId) {
     const query = 'DELETE FROM department WHERE id = ?';
@@ -329,7 +332,7 @@ function deleteDepartments(departmentId) {
     })
 }
 
-// Delete Role 
+//                               Delete Role 
 
 function deleteRole(roleId) {
     const query = 'DELETE FROM role WHERE id = ?';
@@ -347,7 +350,7 @@ function deleteRole(roleId) {
     });
 }
 
-// Delete Employee 
+//                              Delete Employee 
 
 function deleteEmployee() {
     const query =  "DELETE FROM employee WHERE id = ?";
@@ -365,7 +368,7 @@ function deleteEmployee() {
     });
 }
 
-// Get sum of department by salary 
+//                              Get sum of department by salary 
 
 function departmentSum(departmentId) {
     const query = `

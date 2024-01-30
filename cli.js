@@ -1,13 +1,4 @@
 //Dev Notes 
-// add Delete functions to main menu and cases 
-
-// clean up getDepartments 
-
-// add stylign and figlet for headers etc.. 
-
-
-// add arogant feeback via console.log to give personality 
-
 
 
 // Import chalk and figlet 
@@ -15,9 +6,7 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 
 
-
-
-//           INQUIRER PROMPTS 
+//           Import inquirer and all querie functions from 'queries.js'
 const inquirer = require('inquirer');
 const { viewDepartments, viewRoles, viewAllEmployees, addDepartment, addRole, addEmployee, getRoles,  getEmployees ,  getManagers ,  getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan , getSupervisor , deleteDepartments , deleteEmployee , deleteRole , departmentSum } = require('./queries/queries.js');
 
@@ -73,7 +62,7 @@ async function start() {
     chalk.green(figlet.textSync(' Nerd Herd HR ', { horizontalLayout: 'full' })));
 
     //Welcome message 
-
+    // Using Figlet and Chalk to add some flair to NerhHerd
     console.log(chalk.red(' \n Welcome to NerdHerd HR Management System!'));
     console.log (chalk.red('\n This application helps you manage HR tasks such as viewing and updating employee details, departments, and roles.'));
 
@@ -129,48 +118,40 @@ async function start() {
         break;
      
         case 'Update Employee Role':
-        // Logic for updating Employee Role...
         await promptUpdateEmployeeRole();
         break;
 
         case 'Update Employee Manager':
-        // Logic for updating Employee Role...
         await promptUpdateEmployeeMan();
         break;
         
         case 'Search Employees by Manager':
-          // Logic for updating Employee Role...
           await promptGetSupervisor();
           break;
 
           case'Search by Department':
-            // Logic for updating Employee Role...
             await promptGetDepartments();
             break;
 
             case 'Delete Department':
-            // logic for deleting department 
             await promptDeleteDepartment();
             break;
 
             case 'Delete Role':
-              // Logic for deleting role 
               await promptDeleteRole();
               break;
 
               case 'Delete Employee':
-                //Logic for deleting employee 
                 await promptDeleteEmployee();
                 break;
 
                 case 'Department Salary Totals':
-                  //logic for department sum 
                   await promptDepartmentSum()
                   break;
 
         case 'Exit':
           // Exit the promgram 
-        console.log('Till Next Time Mr. Jones');
+        console.log(chalk.green('Ill keep the Nerds in check till you get back!'));
         process.exit(0);
     }
   } catch (error) {
