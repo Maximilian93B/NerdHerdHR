@@ -396,3 +396,5 @@ function departmentSum(departmentId) {
 
 
 module.exports = { viewDepartments, viewRoles, viewAllEmployees , addDepartment, addRole , addEmployee , getEmployees, getRoles , getManagers , getDepartments , getEmployeesByDepartment , updateEmployeeRole , updateEmployeeMan, getSupervisor, deleteDepartments , deleteRole , deleteEmployee , departmentSum};
+
+// ---------MDB.Dev
