@@ -352,7 +352,7 @@ function deleteRole(roleId) {
 
 //                              Delete Employee 
 
-function deleteEmployee() {
+function deleteEmployee(employeeId) {
     const query =  "DELETE FROM employee WHERE id = ?";
 
     return new Promise ((resolve, reject ) => {

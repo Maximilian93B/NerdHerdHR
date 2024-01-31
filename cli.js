@@ -54,7 +54,8 @@ const mainMenu = [
 ];
 //            START NERDHERD
 async function start() {
-  console.clear();
+  let exitApp = false; 
+
 
   console.clear();
   // Display figlet header 
@@ -67,6 +68,7 @@ async function start() {
     console.log (chalk.red('\n This application helps you manage HR tasks such as viewing and updating employee details, departments, and roles.'));
 
     console.log('\n');
+while (!exitApp) {
 
   try {
     // Display the main menu and capture users choice 
@@ -158,7 +160,7 @@ async function start() {
     console.log('Woah, Something is wrong here ' + error);
   }
 }
-
+}
 
 // Start NerdHerdHR
 start();
