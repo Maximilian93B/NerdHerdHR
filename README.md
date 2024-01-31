@@ -3,15 +3,7 @@
 
 
 
-## ![Image description](./assets/images/Screenshot%202024-01-30%20121100.png)
-
-
-
-
-
-## [Link text](URL)
-
-
+## ![NerdHerdHR](./assets/images/Screenshot%202024-01-30%20121100.png)
 
 
 

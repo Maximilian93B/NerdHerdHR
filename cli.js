@@ -77,6 +77,7 @@ async function start() {
        switch (menuChoice) {
         case 'View All Departments':
           await viewDepartments();
+          // this prompt will allow the users to return the main menu. It will follow every await function in the each case 
           await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
           break;
         
