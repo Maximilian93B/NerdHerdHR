@@ -55,8 +55,6 @@ const mainMenu = [
 //            START NERDHERD
 async function start() {
   let exitApp = false; 
-
-
   console.clear();
   // Display figlet header 
   console.log(
@@ -66,98 +64,114 @@ async function start() {
     // Using Figlet and Chalk to add some flair to NerhHerd
     console.log(chalk.red(' \n Welcome to NerdHerd HR Management System!'));
     console.log (chalk.red('\n This application helps you manage HR tasks such as viewing and updating employee details, departments, and roles.'));
+    console.log('\n'); // Needed space before main menu 
 
-    console.log('\n');
-while (!exitApp) {
+    while (!exitApp) {
 
-  try {
+    try {
     // Display the main menu and capture users choice 
-    const { menuChoice } = await inquirer.prompt(mainMenu);
+      const { menuChoice } = await inquirer.prompt(mainMenu);
 
     // Switch statements to handle the users chioces 
     // Each Case will allow the user to view Tables from SQL database via await function like await "viewFunction()""
-    switch (menuChoice) {
-      case 'View All Departments':
-        await viewDepartments();
-        break;
-      
-        case 'View All Roles':
-        await viewRoles();
-        break;
-      
-        case 'View All Employees':
-        await viewAllEmployees();
-        break;
-      
-        case 'Add Department':
-          //Prompt to add a new Department 
-        const {departmentName} = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'departmentName',
-            message: chalk.red('Enter the name of the new Department:'),
-            validate: input => {
-              if (input.trim() === '') {
-                return 'Department name cannot be empty.';
-              }
-              return true;
-            }
-          }
-        ]);
-        await addDepartment(departmentName);
-        break;
-      
-        case 'Add Role':
-          // Prompt for a new role 
-          const roleAnswers = await promptAddRole();
-          await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
-        break;
-      
-        case 'Add Employee':
-        // Logic for adding Employee...
-        const employeeData = await addEmployeeAnswers();
-        await addEmployee(employeeData.firstName, employeeData.lastName, employeeData.roleId, employeeData.managerId, employeeData.salary); 
-        break;
-     
-        case 'Update Employee Role':
-        await promptUpdateEmployeeRole();
-        break;
-
-        case 'Update Employee Manager':
-        await promptUpdateEmployeeMan();
-        break;
-        
-        case 'Search Employees by Manager':
-          await promptGetSupervisor();
+       switch (menuChoice) {
+        case 'View All Departments':
+          await viewDepartments();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
           break;
+        
+          case 'View All Roles':
+          await viewRoles();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+        
+          case 'View All Employees':
+          await viewAllEmployees();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+        
+          case 'Add Department':
+            //Prompt to add a new Department 
+          const {departmentName} = await inquirer.prompt([
+            {
+              type: 'input',
+              name: 'departmentName',
+              message: chalk.red('Enter the name of the new Department:'),
+              validate: input => {
+                if (input.trim() === '') {
+                  return 'Department name cannot be empty.';
+                }
+                return true;
+              }
+            }
+          ]);
+          await addDepartment(departmentName);
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+        
+          case 'Add Role':
+            // Prompt for a new role 
+            const roleAnswers = await promptAddRole();
+            await addRole(roleAnswers.roleTitle, roleAnswers.roleSalary, roleAnswers.departmentId);
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+        
+          case 'Add Employee':
+          // Logic for adding Employee...
+          const employeeData = await addEmployeeAnswers();
+          await addEmployee(employeeData.firstName, employeeData.lastName, employeeData.roleId, employeeData.managerId, employeeData.salary); 
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+      
+          case 'Update Employee Role':
+          await promptUpdateEmployeeRole();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+
+          case 'Update Employee Manager':
+          await promptUpdateEmployeeMan();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+          
+          case 'Search Employees by Manager':
+            await promptGetSupervisor();
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+            break;
 
           case'Search by Department':
             await promptGetDepartments();
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
             break;
 
-            case 'Delete Department':
-            await promptDeleteDepartment();
+          case 'Delete Department':
+          await promptDeleteDepartment();
+          await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+          break;
+
+          case 'Delete Role':
+            await promptDeleteRole();
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
             break;
 
-            case 'Delete Role':
-              await promptDeleteRole();
-              break;
+          case 'Delete Employee':
+            await promptDeleteEmployee();
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+            break;
 
-              case 'Delete Employee':
-                await promptDeleteEmployee();
-                break;
+          case 'Department Salary Totals':
+            await promptDepartmentSum()
+            await inquirer.prompt({ type: 'input', name: 'continue', message: 'Press enter to continue...' });
+            break;
 
-                case 'Department Salary Totals':
-                  await promptDepartmentSum()
-                  break;
+          case 'Exit':
+            // Exit the promgram 
+            console.log(chalk.green('Ill keep the Nerds in check till you get back!'));
+            exitApp = true; 
+          break; 
 
-        case 'Exit':
-          // Exit the promgram 
-        console.log(chalk.green('Ill keep the Nerds in check till you get back!'));
-        process.exit(0);
-    }
-  } catch (error) {
-    console.log('Woah, Something is wrong here ' + error);
+      }
+    } catch (error) {
+      console.log('Woah, Something is wrong here ' + error);
   }
 }
 }
